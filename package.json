@@ -11,8 +11,11 @@
   },
   "dependencies": {
     "expo": "^50.0.0",
+    "expo-constants": "~15.4.5",
+    "expo-updates": "~0.24.11",
     "react": "18.2.0",
-    "react-native": "0.73.5"
+    "react-native": "0.73.5",
+    "react-native-bootsplash": "^5.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

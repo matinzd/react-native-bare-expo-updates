@@ -1,4 +1,26 @@
 {
   "name": "ReactNativeExpoUpdates",
-  "displayName": "ReactNativeExpoUpdates"
+  "displayName": "ReactNativeExpoUpdates",
+  "expo": {
+    "name": "ReactNativeExpoUpdates",
+    "slug": "ReactNativeExpoUpdates",
+    "ios": {
+      "bundleIdentifier": "org.reactjs.native.example.ReactNativeExpoUpdates"
+    },
+    "android": {
+      "package": "com.MyApp"
+    },
+    "runtimeVersion": "1.0.0",
+    "updates": {
+      "url": "http://localhost:3000/api/manifest"
+    },
+    "plugins": [
+      [
+        "expo-updates",
+        {
+          "username": "test@gmail.com"
+        }
+      ]
+    ]
+  }
 }

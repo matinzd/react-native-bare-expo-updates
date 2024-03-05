@@ -1,13 +1,9 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
+import Constants from 'expo-constants';
 import type {PropsWithChildren} from 'react';
+import React, {useEffect} from 'react';
 import {
+  Alert,
+  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -16,14 +12,10 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import * as Updates from 'expo-updates';
+import BootSplash from 'react-native-bootsplash';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -62,6 +54,25 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  useEffect(() => {
+    BootSplash.hide({fade: true});
+    onFetchUpdateAsync();
+  }, []);
+
+  async function onFetchUpdateAsync() {
+    try {
+      const update = await Updates.checkForUpdateAsync();
+
+      if (update.isAvailable) {
+        await Updates.fetchUpdateAsync();
+        await Updates.reloadAsync();
+      }
+    } catch (error) {
+      // You can also add an alert() to see the error message in case of an error when fetching updates.
+      Alert.alert(`Error fetching latest Expo update: ${error}`);
+    }
+  }
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -80,16 +91,10 @@ function App(): React.JSX.Element {
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.
           </Section>
+          <Button title={'Fetch update'} onPress={onFetchUpdateAsync} />
           <Section title="See Your Changes">
-            <ReloadInstructions />
+            <Text>System fonts: {Constants.systemFonts.join('-')}</Text>
           </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
         </View>
       </ScrollView>
     </SafeAreaView>
